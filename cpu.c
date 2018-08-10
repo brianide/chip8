@@ -15,9 +15,8 @@ CPU* newCPU()
 uint16_t loadROM(CPU* cpu, char* filename)
 {
 	FILE* rom = fopen(filename, "r");
-	uint16_t len = fread(cpu->memory + ROM_START, 2, (RAM_SIZE - ROM_START) / 2, rom);
+	uint16_t len = fread(cpu->memory + ROM_START, 1, RAM_SIZE - ROM_START, rom);
 	fclose(rom);
-	
 	return len;
 }
 
