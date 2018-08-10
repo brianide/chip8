@@ -21,7 +21,7 @@ uint16_t loadROM(CPU* cpu, char* filename)
 	return len;
 }
 
-void evaluate(CPU* cpu)
+uint8_t evaluate(CPU* cpu)
 {
 	uint8_t  hi = cpu->memory[cpu->pcReg];
 	uint8_t  lo = cpu->memory[cpu->pcReg + 1];
@@ -35,11 +35,21 @@ void evaluate(CPU* cpu)
 	uint8_t  n   = lo & 0xF;
 	uint16_t kk  = lo;
 	uint16_t nnn = op & 0xFFF;
+	
+	uint8_t*  vx = &cpu->gpRegs[x];
+	uint8_t*  vy = &cpu->gpRegs[y];
+	uint8_t*  vf = &cpu->gpRegs[0xF];
+	uint16_t* pc = &cpu->pcReg;
+	uint8_t*  sp = &cpu->spReg;
+	uint16_t* i  = &cpu->iReg;
+	
 	uint16_t acc = 0;
 	
 	#define c(code, mnem, test, op) if(test) { op; } else
 	LIST_OPS(c) fprintf(stderr, "Unknown instruction: %04X\n", op);
 	#undef c
+	
+	return 0;
 }
 
 void dumpMemory(CPU* cpu)
